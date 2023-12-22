@@ -17,4 +17,8 @@ response = requests.get(url)
 # Neste trecho de código específico, o método response.json() está retornando um dicionário, e o método from_dict() é usado para converter esse dicionário em um objeto DataFrame chamado dados.
 dados = pd.DataFrame.from_dict(response.json())
 
+# Adicionando métricas na aplicação
+st.metric('Receita total', dados['Preço'].sum())
+st.metric('Quantidade de vendas', dados.shape[0])
+
 st.dataframe(dados)
