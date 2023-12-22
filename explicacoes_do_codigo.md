@@ -102,10 +102,26 @@ Algoritmo: 7
 
 ### Transformando dados coletados de uma API em DataFrame
 
+> Linha 21 do código
+
 `dados = pd.DataFrame.from_dict(response.json())`
 
-Esta parte do código usa o método f`rom_dict()` da classe p`d.DataFrame` da biblioteca pandas para criar um objeto DataFrame a partir de um dicionário.
+Esta parte do código usa o método `from_dict()` da classe `pd.DataFrame` da biblioteca pandas para criar um objeto DataFrame a partir de um dicionário.
 
 O método `from_dict()` permite construir um DataFrame especificando os dados na forma de um dicionário, onde as chaves representam os nomes das colunas e os valores representam os dados de cada coluna.
 
 Neste trecho de código específico, o método `response.json()` está retornando um dicionário, e o método `from_dict()` é usado para converter esse dicionário em um objeto DataFrame chamado dados.
+
+### Ajusta o layout da aplicação
+
+> Linhas 20 a 27
+
+Esta parte do código cria um layout de painel com duas colunas usando a função `st.columns()` da biblioteca Streamlit.
+
+A função `st.columns()` retorna uma lista de objetos de coluna que podem ser usados ​​para organizar o conteúdo do painel. Neste caso, está criando duas colunas, `coluna1` e coluna2, com largura igual.
+
+A instrução with é então usada para especificar o bloco de código que será executado em cada coluna.
+
+Dentro da `coluna1`, a função `st.metric()` é usada para exibir uma métrica no dashboard. São necessários dois argumentos: o rótulo ou título da métrica (`Receita total`) e o valor da métrica, que é calculado somando a coluna `Preço` do DataFrame `dados` usando `dados['Preço'].sum ()`.
+
+Dentro da `coluna2`, outra função `st.metric()` é usada para exibir uma métrica diferente. Desta vez, mostra o rótulo `Quantidade de vendas` e o valor é obtido acessando o atributo `shape` do DataFrame `dados`, que retorna o número de linhas do DataFrame usando `dados.shape[0]`.
