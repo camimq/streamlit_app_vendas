@@ -31,7 +31,10 @@ receita_estados = dados.drop_duplicates(subset='Local da compra')[['Local da com
 
 receita_mensal = dados.set_index('Data da Compra').groupby(pd.Grouper(freq='M'))['Preço'].sum().reset_index() # Constroi tabela com Datetime
 receita_mensal['Ano'] = receita_mensal['Data da Compra'].dt.year # constroi tabela com uma coluna com o mes e outra coluna com o ano
-receita_mensal['Mês'] = receita_mensal['Data da Compra'].dt.month_name()   # constroi tabela com uma coluna com o mes e outra coluna com o ano 
+receita_mensal['Mês'] = receita_mensal['Data da Compra'].dt.month_name() # constroi tabela com uma coluna com o mes e outra coluna com o ano 
+
+receita_categorias = dados.groupby('Categoria do Produto')[['Preço']].sum().sort_values('Preço', ascending=False)
+
 
 # Gráficos
 fig_mapa_receita = px.scatter_geo(receita_estados,
@@ -54,17 +57,30 @@ fig_receita_mensal = px.line(receita_mensal,
                              title = 'Receita Mensal')
 fig_receita_mensal.update_layout(yaxis_title = 'Receita')
 
+fig_receita_estados = px.bar(receita_estados.head(),
+                             x = 'Local da compra',
+                             y = 'Preço',
+                             text_auto = True,
+                             title = 'Top estados (receita)')
+fig_receita_estados.update_layout(yaxis_title = 'Receita')
 
+fig_receita_categorias = px.bar(receita_categorias,
+                                text_auto = True,
+                                title = 'Receita por categoria')
+fig_receita_categorias.update_layout(yaxis_title = 'Receita')
 
 ## Visualização no streamlit
 coluna1, coluna2 = st.columns(2)
 with coluna1:
     st.metric('Receita total', formata_numero(dados['Preço'].sum(), 'R$'))
     st.plotly_chart(fig_mapa_receita, use_container_width=True)
+    st.plotly_chart(fig_receita_estados, use_container_width=True)
 with coluna2:
     st.metric('Quantidade de vendas', formata_numero(dados.shape[0]))
     st.plotly_chart(fig_receita_mensal, use_container_width=True)
+    st.plotly_chart(fig_receita_categorias, use_container_width=True)
 
 st.dataframe(dados)
 st.dataframe(receita_estados)
 st.dataframe(receita_mensal)
+st.dataframe(receita_categorias)
