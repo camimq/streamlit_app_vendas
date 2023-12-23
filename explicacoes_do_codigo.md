@@ -112,9 +112,57 @@ O método `from_dict()` permite construir um DataFrame especificando os dados na
 
 Neste trecho de código específico, o método `response.json()` está retornando um dicionário, e o método `from_dict()` é usado para converter esse dicionário em um objeto DataFrame chamado dados.
 
+### Tabelas
+
+> Linhas 24 e 25
+
+Este trecho de código está usando a biblioteca Pandas para manipular um conjunto de dados chamado `dados`. O objetivo é calcular a receita total por local de compra e, em seguida, associar essa informação com as coordenadas geográficas de cada local.
+
+No primeiro comando, `receita_estados = dados.groupby('Local da compra')['Preço].sum()`, o código está agrupando os dados pleo campo `Local da compra` e somando os valores do campo `Preço` para cada grupo. Isso resultará em uma nova série Pandas onde o índice é o `Local da compra` e o valor é a soma dos preços, ou seja, a receita total para aquele local.
+
+No segundo comando, `receita_estados = dados.drop_duplicates(subset='Local da compra')[['Local da compra', 'lat','lon']].merge(receita_estados, left_on='Local da compra', right_index = True).sort_values('Preço', ascending=False)`, o código está realizando várias operações:
+
+1. `dados.drop_duplicates(subset='Local da compra')`: remove as linhas duplicadas do DataFrame `dados` com base no campo `Local da compra`. Isso é feito para garantir que haja apenas uma linha para cada local de compra.
+
+2. `[['Local da compra', 'lat', 'lon']]`: seleciona apenas as colunas `Local da compra`, `lat`, `lon` do DataFrame resultante.
+
+3. `.merge(receita_estadosw, left_on = 'Local da compra, right_index = True)`: combina o DataFrame resultante com a série `receita_estados` com base no campo `Local da compra`. Isso adiciona a receita total calculada anteriormente como uma nova coluna no DataFrame.
+
+4. `.sort_values('Preço', ascending=False)`: ordena o DataFrame resultante em ordem descrescente de `Preço`. Isso significa que os locais de compra com maior receita serão listados primeiro.
+
+O resultado final é um Dataframe que contém o `Local da compra`, suas coordenadas geográficas (`lat` e `lon`) e a receita total para aquele local.
+
+
+### Gráficos
+> Linhas 35 a 44
+
+Es trecho de código está usando a biblioteca Plotly Express para criar um gráfico de dispersão geográfica. O objetivo é visualizar a receita por estato em um mapa.
+
+O comando `px.scatter_geo(receita_estados, lat = 'lat', lon = 'lon', scope = 'south america', size = 'Preço', template = 'seaborn', hover_name' = 'Local da compra', hover_data = {'lat' : False, 'lon' : False}, title='Receita por estado)` está criando o gráfico. Vamos entender cada parâmetro:
+
+- `receita_estados`: é o DataFrame que contém os dados a serem plotados. Cada linha do DataFrame representa um ponto no gráfico.
+
+- `lat = 'lat'` e `lon = 'lon'`: especificam as colunas do DataFram que contêm as coordenadas geográficas (latitude e longitude) de cada ponto.
+
+- `scope = 'south america`: define o escopo do mapa para a América do Sul.
+
+- `size = 'Preço`: define o tamanho de cada ponto com base nos valores da coluna 'Preço'. Isso significa que os pontos representando locais com maior receita serão maiores.
+
+- `template = 'seaborn`: define o estilo visual do gráfico para Seaborn.
+
+- `hover_name = 'Local da compra`: define a coluna do DataFrame que será exibida quando o usuário passar o mouse sobre um ponto.
+
+- `hover_data={'lat' : False, 'lon' : Flase}`: espeficia quais dados adicionais serão exibidos quando o usuário passar o mouse sobre um ponto. Neste caso, as coordenadas geográficas não serão exibidas.
+
+- `title = 'Receita por estado`: define o título do gráfico.
+
+O resultado é um objeto `go.Figure` que representa o gráfico de dispersão geográfica. Este objeto pode ser exibido usando a função `show()` ou pode ser salvo como um arquivo usando a função `write_html()`.
+
+
+
 ### Ajusta o layout da aplicação
 
-> Linhas 20 a 27
+> Linhas 39 a 47
 
 Esta parte do código cria um layout de painel com duas colunas usando a função `st.columns()` da biblioteca Streamlit.
 
