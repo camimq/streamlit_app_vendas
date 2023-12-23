@@ -4,7 +4,7 @@
 
 ### Função `formata_numero`
 
-> Linhas 6 à 12
+> Linhas 9 à 15
 
 ```
 def formata_numero(valor, prefixo = ''):
@@ -114,7 +114,8 @@ Neste trecho de código específico, o método `response.json()` está retornand
 
 ### Tabelas
 
-> Linhas 24 e 25
+#### Tabelas de Receitas
+> Linhas 28 e 29 | `receita_estados`
 
 Este trecho de código está usando a biblioteca Pandas para manipular um conjunto de dados chamado `dados`. O objetivo é calcular a receita total por local de compra e, em seguida, associar essa informação com as coordenadas geográficas de cada local.
 
@@ -132,6 +133,26 @@ No segundo comando, `receita_estados = dados.drop_duplicates(subset='Local da co
 
 O resultado final é um Dataframe que contém o `Local da compra`, suas coordenadas geográficas (`lat` e `lon`) e a receita total para aquele local.
 
+> Linhas 32 à 34 | `receita_mensal`
+
+`receita_mensal = dados.set_index('Data da Compra').groupby(pd.Grouper(freq='M'))['Preço'].sum().reset_index()`
+
+:arrow_up:
+
+O código selecionado realiza algumas operações em um DataFrame usando as funções `set_index`, `groupby`, `sum`, `reset_index` da biblioteca Pandas.
+
+1. `dados.set_index('Data da Compra')`: a função `set_index` é usada para definir a coluna "Data da Compra" como o índice do DataFrame `dados`. Isso significa que os valores dessa coluna serão usados como rótulo para as linhas do DataFrame.
+
+2. `.groupby(pd.Grouper(freq='M'))`: a função `groupby` é usada para agrupas os dados do DataFrame por um determinado critério. Nesse caso, está sendo usado o `pd.Grouper` com o argumento `freq='M'`, que indica que os dados devem ser agrupados por mês. Isso significa que os daos serão divididos em grupos de acordo com o mês em que ocorreram.
+
+3. `['Preço'].sum()`: a função `sum` é aplicada ao grupo resultante do passo anterior. Ela calcula a soma dos vendedores da coluna "Preço" para cada grupo.
+
+4. `reset_index()`: a função `reset_index` é usada para redefinir o índice do DataFrame, removendo o índice anteriormente definido no passo 1. Isso faz com que o índice volte a ser uma sequência numérica padrão.
+
+No final, a variável `receita_mensal` irá conter um novo DataFrame com duas colunas: "Data da Compara" e "Preço". Os dados serão agrupados por mês e a soma dos valores da coluna "Preço" será calculada para cada grupo.
+
+Essas operações são comumente usadas para análise de dados temporais, como calcular a receita mensal de uma empresa com base em dados de vendas.
+ 
 
 ### Gráficos
 > Linhas 35 a 44
