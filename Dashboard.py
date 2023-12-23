@@ -3,7 +3,7 @@ import requests
 import pandas as pd
 import plotly.express as px
 
-# configura de fomra padrão, a exibição do streamlit
+# configura de forma padrão, a exibição do streamlit
 st.set_page_config(layout = 'wide')
 
 # Formata números da aplicação
@@ -20,9 +20,7 @@ st.title('DASHBOARD DE VENDAS :shopping_trolley:')
 url = 'https://labdados.com/produtos'
 response = requests.get(url)
 dados = pd.DataFrame.from_dict(response.json()) # Transforma os dados acessados em um DataFrame
-dados['Data da Compra'] = pd.to_datetime(dados['Data da Compra'], format = '%d/%m/%Y')   # altera o formato da coluna datas de string para datetime
-
-# constroi tabela com date time
+dados['Data da Compra'] = pd.to_datetime(dados['Data da Compra'], format = '%d/%m/%Y') # altera o formato da coluna datas de string para datetime
 
 ## Tabelas
 
