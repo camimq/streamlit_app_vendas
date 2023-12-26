@@ -22,4 +22,14 @@ with st.sidebar.expander('Preço do produto'):
 with st.sidebar.expander('Data da compra'):
     data_compra = st.date_input('Selecione a data', (dados['Data da Compra'].min(), dados['Data da Compra'].max()))
 
-st.dataframe(dados)
+query = '''
+Produto in @produtos and \
+@preco[0] <= Preço <= @preco[1] and \
+@data_compra[0] <= `Data da Compra` <= @data_compra[1]
+'''
+
+dados_filtrados = dados.query(query)
+dados_filtrados=dados_filtrados[colunas]
+st.dataframe(dados_filtrados)
+
+st.markdown(f'A tabela possui :blue[{dados_filtrados.shape[0]}] linhas e :blue[{dados_filtrados.shape[1]}] colunas.')
