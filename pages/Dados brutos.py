@@ -1,6 +1,16 @@
 import streamlit as st
 import requests
 import pandas as pd
+import time
+
+@st.cache_data
+def converte_csv(df):
+    return df.to_csv(index = False).encode('UTF-8')
+
+def mensagem_sucesso():
+    sucesso = st.success('Arquivo baixado com sucesso!', icon = "✅")
+    time.sleep(5)
+    sucesso.empty()
 
 st.title('DADOS BRUTOS')
 
@@ -33,3 +43,12 @@ dados_filtrados=dados_filtrados[colunas]
 st.dataframe(dados_filtrados)
 
 st.markdown(f'A tabela possui :blue[{dados_filtrados.shape[0]}] linhas e :blue[{dados_filtrados.shape[1]}] colunas.')
+
+st.markdown('Escreva um nome para o arquivo')
+coluna1, coluna2 = st.columns(2)
+with coluna1:
+    nome_arquivo = st.text_input('', label_visibility='collapsed', value = 'dados')
+    nome_arquivo += '.csv'
+
+with coluna2:
+    st.download_button('Fazer o download da tabela em CSV', data = converte_csv(dados_filtrados), file_name=nome_arquivo, mime='text/csv', on_click=mensagem_sucesso)
