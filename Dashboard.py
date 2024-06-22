@@ -66,8 +66,8 @@ vendedores = pd.DataFrame(dados.groupby('Vendedor')['Preço'].agg(['sum', 'count
 # Criação de um gráfico de dispersão geográfico para visualizar a quantidade de vendas por estado na América do Sul
 # Utiliza a biblioteca Plotly Express para a criação do gráfico
 fig_mapa_qtd_vendas = px.scatter_geo(qtd_vendas, # DataFrame contendo os dados de vendas
-                                     lat = 'lat', # Coluna do DataFrame que contém as latitudes dos estados
-                                     lon = 'lon', # Coluna do DataFrame que contém as longitudes dos estados
+                                     #lat = 'lat', # Coluna do DataFrame que contém as latitudes dos estados
+                                     #lon = 'lon', # Coluna do DataFrame que contém as longitudes dos estados
                                      scope = 'south america', # Limita o mapa para mostrar apenas a América do Sul
                                      size = 'Preço', # Utiliza a coluna 'Preço' para determinar o tamanho de cada ponto no mapa
                                      template = 'seaborn', # Define o estilo visual do gráfico como 'seaborn'
@@ -76,8 +76,8 @@ fig_mapa_qtd_vendas = px.scatter_geo(qtd_vendas, # DataFrame contendo os dados d
 # Criação de um gráfico de dispersão geográfico para visualizar a receita por estado na América do Sul
 # Utiliza a biblioteca Plotly Express para a criação do gráfico
 fig_mapa_receita = px.scatter_geo(receita_estados, # DataFrame contendo os dados de receita por estado
-                                  lat = 'lat', # especifica a col do DF que contem latitude
-                                  lon = 'lon', # especifica a col do DF que contem longitude
+                                  #lat = 'lat', # especifica a col do DF que contem latitude
+                                  #lon = 'lon', # especifica a col do DF que contem longitude
                                   scope = 'south america', # define o scope do mapa para américa do sul
                                   size = 'Preço', # define o tamano dos pontos do mapa, baseado nos preços
                                   template = 'seaborn', # layout do gráfico no estilo Seaborn
